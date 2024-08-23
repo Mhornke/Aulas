@@ -1,3 +1,0 @@
-Carne;42.0
-Banana;5.0
-Arroz;7.2
