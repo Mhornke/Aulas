@@ -1,7 +1,0 @@
-- Top 10 pilotos com maior número de vitórias
-- Compara Equipes (ler 2 equipes e mostrar total de vitórias de cada uma)
-- Top 5 vitórias com menor tempo 
-   Tempo, Piloto, Grande Prêmio e Data
-- Pesquisa por Piloto (corrida, ano, local das vitórias)
-- Novos vencedores nos últimos 3 anos (Vencedores novos em 2022, em 2023 e em 2024).
-
