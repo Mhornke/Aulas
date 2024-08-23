@@ -1,0 +1,153 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// model Recuperasenha {
+//   id            Int    @id @default(autoincrement())
+//   email         String @db.VarChar(40)
+//   senhaRecupera String @db.VarChar(200)
+//   usuario       Usuario[]
+//   @@map("recuperasenhas")
+// }
+
+model Usuario {
+  id            Int      @id @default(autoincrement())
+  nome          String   @db.VarChar(60)
+  email         String   @db.VarChar(40)
+  senha         String   @db.VarChar(60) // senha deve ser varchar(60)
+  //senhaRecupera String   @db.VarChar(200)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  // recupera       Recuperasenha @relation(fields: [recuperaId], references: [id])
+  // recuperaId      Int
+  mae           Mae[]
+  medicos       Medico[]
+  bebe          Bebe[]
+  logs          Log[]
+
+  @@map("usuarios")
+}
+
+model Mae {
+  id       Int      @id @default(autoincrement())
+  nome     String   @db.VarChar(60)
+  endereco String   @db.VarChar(40)
+  telefone String   @db.VarChar(20)
+  datanasc DateTime
+  bebes    Bebe[]
+
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  etapa   Etapa   @default(Gestacao)
+  deleted Boolean @default(false)
+
+  @@map("maes")
+}
+
+model Medico {
+  id            Int     @id @default(autoincrement())
+  nome          String  @db.VarChar(60)
+  crm           String  @db.VarChar(20)
+  celular       String  @db.VarChar(20)
+  especialidade String  @db.VarChar(20)
+  usuario       Usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId     Int
+  bebes         Bebe[]
+
+  @@map("medicos")
+}
+
+model Bebe {
+  id        Int       @id @default(autoincrement())
+  nome      String?   @db.VarChar(60)
+  datanasc  DateTime?
+  peso      Decimal?  @db.Decimal(5, 3)
+  altura    Decimal?  @db.Decimal(4, 2)
+  sexo      String?   @db.VarChar(40)
+  etapa     Etapa     @default(Gestacao)
+  mae       Mae       @relation(fields: [maeId], references: [id])
+  maeId     Int
+  medico    Medico    @relation(fields: [medicoId], references: [id])
+  medicoId  Int
+  usuario   Usuario   @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
+
+  @@map("bebes")
+}
+
+model Log {
+  id          Int      @id @default(autoincrement())
+  descricao   String   @db.VarChar(60)
+  complemento String   @db.VarChar(255)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int
+
+  @@map("logs")
+}
+
+enum Etapa {
+  Gestacao
+  EmTrabalho
+  RecemNascido
+}
+
+// model Usuario {
+//   id           Int      @id @default(autoincrement())
+//   nome         String   @db.VarChar(60)
+//   email        String   @db.VarChar(40)
+//   senha        String   @db.VarChar(60)   // senha deve ser varchar(60)
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime @updatedAt  
+//   animais      Animal[]
+//   logs         Log[]
+//   @@map("usuarios")
+// }
+
+// model Animal {
+//   id           Int      @id @default(autoincrement())
+//   nome         String   @db.VarChar(60)
+//   raca         String   @db.VarChar(40)
+//   idade        Int      @db.SmallInt
+//   usuario      Usuario  @relation(fields: [usuarioId], references: [id])
+//   usuarioId    Int
+//   custo_mensal Decimal  @db.Decimal(9, 2)
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime @updatedAt  
+//   habitat      Habitats @default(Terra)
+//   deleted      Boolean  @default(false)
+//   @@map("animais")
+// }
+
+// model Log {
+//   id           Int      @id @default(autoincrement())
+//   descricao    String   @db.VarChar(60)
+//   complemento  String   @db.VarChar(255)
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime @updatedAt  
+//   usuario      Usuario  @relation(fields: [usuarioId], references: [id])
+//   usuarioId    Int
+//   @@map("logs")
+// }
+
+// enum Habitats {
+//   Terra
+//   Ar
+//   Mar
+// }

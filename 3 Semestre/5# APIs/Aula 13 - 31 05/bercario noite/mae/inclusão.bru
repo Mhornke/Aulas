@@ -1,0 +1,20 @@
+meta {
+  name: inclusão
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/maes
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome" : "Marcia Souza",
+    "endereco": "rua batista 545",
+    "telefone" : "944565",
+    "datanasc": 14031971
+  }
+}

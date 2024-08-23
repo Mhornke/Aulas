@@ -1,0 +1,1 @@
+- Criar primeira mente as models que não tem chave estrangeira 

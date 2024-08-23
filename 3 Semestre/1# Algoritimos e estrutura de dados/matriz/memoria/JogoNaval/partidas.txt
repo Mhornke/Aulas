@@ -1,0 +1,7 @@
+matheus;50; 4:23;4;Vitoria
+jorge da borracharia;0.0; 0:27;9;Derrota
+jorge;0.0; 0:32;9;Derrota
+teste 1;11.0; 0:32;10;Derrota
+tenenteGameplay;3; 5:49;10;Derrota
+durival;37; 4:29;7;Vitoria
+chefe;20; 3:59;7;Vitoria
